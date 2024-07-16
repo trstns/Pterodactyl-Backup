@@ -1,0 +1,12 @@
+services:
+  pterodactyl-backup:
+    container_name: pterodactyl-backup
+    build: .
+    restart: unless-stopped
+    environment:
+      CRON: "0 4 * * *"
+      PTERODACTYLURL: "https://pterodactyl.server.address/api"
+      PTERODACTYLAPIKEY: "ptlc_xxxxxxxxxxxxxxxxxxxxxxxxx" # Client API key
+      BACKUPSTOKEEP: 7
+    volumes:
+      - ./backups:/backups # Mount location to store backups

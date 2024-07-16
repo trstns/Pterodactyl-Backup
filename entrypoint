@@ -1,0 +1,16 @@
+#!/bin/pwsh
+
+$CRON = "$env:CRON pwsh /src/Backup-PterodactylServers.ps1"
+
+Set-Content -Path /etc/cron.d/Crontab -Value $CRON
+
+# Give execution rights on the cron job
+chmod 0644 /etc/cron.d/Crontab
+
+# Apply cron job
+crontab /etc/cron.d/Crontab
+
+# Create the log file to be able to run tail
+Set-Content -Path /src/backup.log -Value "Container started."
+
+get-content -Wait -Path /src/backup.log
